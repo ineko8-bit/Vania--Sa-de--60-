@@ -1,4 +1,3 @@
-
 name: CI - Saude 60+
 
 on:
@@ -9,7 +8,6 @@ on:
 jobs:
   testes:
     runs-on: ubuntu-latest
-
     steps:
       - name: Baixar codigo
         uses: actions/checkout@v4
@@ -22,11 +20,14 @@ jobs:
       - name: Verificar sintaxe JavaScript
         run: node --check app.js
 
-            - name: Verificar arquivos essenciais
+      - name: Verificar arquivos essenciais
         run: |
           pwd
           ls -la
           test -f index.html
           test -f style.css
           test -f app.js
-          test -f README.md       
+          test -f README.md
+
+      - name: Confirmar verificacoes
+        run: echo "Verificacoes basicas concluidas com sucesso"
