@@ -1,3 +1,4 @@
+
 name: CI - Saude 60+
 
 on:
@@ -21,10 +22,12 @@ jobs:
       - name: Verificar sintaxe JavaScript
         run: node --check app.js
 
-      - name: Verificar arquivos essenciais
+      - name:       - name: Verificar arquivos essenciais
         run: |
+          pwd
+          ls -la
           test -f index.html
-          test -f estilo.css
+          test -f style.css
           test -f app.js
           test -f README.md
 
