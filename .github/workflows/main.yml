@@ -22,14 +22,11 @@ jobs:
       - name: Verificar sintaxe JavaScript
         run: node --check app.js
 
-      - name:       - name: Verificar arquivos essenciais
+            - name: Verificar arquivos essenciais
         run: |
           pwd
           ls -la
           test -f index.html
           test -f style.css
           test -f app.js
-          test -f README.md
-
-      - name: Confirmar verificacoes
-        run: echo "Verificacoes basicas concluidas com sucesso!"
+          test -f README.md       
