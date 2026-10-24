@@ -1,0 +1,32 @@
+name: CI - Saude 60+
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verificar sintaxe JavaScript
+        run: node --check app.js
+
+      - name: Verificar arquivos essenciais
+        run: |
+          test -f index.html
+          test -f estilo.css
+          test -f app.js
+          test -f README.md
+
+      - name: Confirmar verificacoes
+        run: echo "Verificacoes basicas concluidas com sucesso!"
