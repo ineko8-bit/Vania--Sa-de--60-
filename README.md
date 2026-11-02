@@ -1,39 +1,66 @@
-# Saúde 60+
+# Saúde 60+ | Hidratação
 
-MVP acadêmico de saúde digital para pessoas idosas, familiares e cuidadores. O objetivo definido para a próxima versão é apoiar o acompanhamento do consumo de água por uma interface simples e acessível, em alinhamento ao ODS 3 — Saúde e Bem-Estar.
+MVP acadêmico para acompanhar o consumo de água de pessoas idosas, familiares e cuidadores, em alinhamento ao ODS 3 — Saúde e Bem-Estar. Organização de medicamentos é o escopo anterior e não descreve o aplicativo atual.
 
-## Estado atual e mudança de escopo
+## Estado atual
 
-O protótipo existente foi descrito originalmente como organizador de medicamentos e horários, com cadastro, consulta e avisos textuais. Esse é o escopo anterior; a próxima versão terá foco no registro de água, e não no gerenciamento de medicamentos.
+Há uma implementação de hidratação em `index.html` e `app.js` na branch `main`. **Implementação existente não significa validação concluída.** Esta descrição resulta de inspeção do código em 02/11/2026; não comprova testes em navegador, acessibilidade ou validação com usuários.
 
-**As funcionalidades de hidratação ainda não estão implementadas nem validadas.** Este PR atualiza somente a documentação. Sua aprovação não comprova a entrega funcional do novo MVP.
+## Funcionalidades implementadas no código
 
-## Funcionalidades planejadas de hidratação
+- Registro de água em mL: números inteiros de 1 a 3000 por lançamento.
+- Data local e horário do dispositivo preenchidos automaticamente no registro.
+- Lista dos registros de hoje e soma do consumo diário.
+- Persistência do peso e dos registros em `localStorage`, na chave `saude60-hidratacao-v1`.
+- Cálculo de referência inicial pelo peso: valor arredondado de peso × 30 mL/dia, com peso de 20 a 300 kg.
+- Progresso percentual limitado visualmente a 100%, mantendo o total consumido em mL.
+- Exclusão de todos os registros de hoje mediante confirmação; registros de outros dias permanecem armazenados.
+- Mensagens de estado, rótulos associados aos campos e regiões de anúncio acessível no HTML.
 
-- Localizar a função Hidratação em uma interface responsiva e acessível.
-- Registrar volume de água em mL e data/hora do consumo.
-- Consultar registros e total diário.
-- Corrigir ou excluir um registro e preservar os dados ao recarregar.
-- Exibir progresso somente quando houver uma meta configurada; sem meta, mostrar apenas o total consumido.
+Sem peso informado, o aplicativo mostra o total e solicita o cálculo da referência; não classifica o consumo como suficiente ou insuficiente.
 
-O escopo, os critérios de aceite e as três tarefas de validação estão em [Proposta de hidratação](docs/proposta-hidratacao.md).
+## Limitações e pendências
 
-## Como executar o protótipo atual
+- Não há edição ou exclusão individual, seleção de data/hora nem consulta de dias anteriores na interface.
+- O dia é calculado pelo relógio local. A atualização automática da tela na virada do dia precisa ser verificada.
+- O armazenamento é local ao navegador e à origem do site: não há contas, autenticação, servidor, backup ou sincronização entre dispositivos ou endereços de publicação.
+- Limpar os dados do navegador pode apagar os registros. Não há notificações externas.
+- Falhas de gravação exibem mensagem; falhas de leitura retornam estado vazio sem aviso específico no código atual. Esse comportamento precisa de revisão e teste.
+- A existência de recursos de acessibilidade no HTML não comprova conformidade. Teclado, foco, contraste, área de toque, leitor de tela, largura de 320 px e ampliação a 200% ainda precisam de verificação documentada.
 
-Abra `index.html` no navegador. O fluxo de hidratação descrito acima depende de implementação futura em outro PR.
+## Referência de consumo e uso demonstrativo
 
-## Limitações
+O código atual calcula automaticamente uma referência de 30 mL/kg/dia. Isso difere do planejamento anterior, que previa meta explícita sem cálculo pelo peso; a decisão de manter ou revisar essa regra permanece pendente de revisão.
 
-Protótipo demonstrativo, com armazenamento local neste navegador. Não envia notificações externas, não substitui orientação profissional e não deve receber dados reais sensíveis em computadores compartilhados. Os testes devem usar exclusivamente dados fictícios.
+Essa referência não é prescrição nem meta universal. A interface informa que necessidades individuais variam e orienta seguir a equipe de saúde em caso de restrição de líquidos, doença renal ou cardíaca. O protótipo não substitui orientação profissional.
 
-Não existe meta universal automática de consumo de água neste planejamento. Metas e alertas devem seguir as regras da proposta antes de serem desenvolvidos.
+**Demonstrações e testes devem usar exclusivamente dados fictícios**, inclusive peso e volumes. Não inserir dados pessoais reais ou sensíveis, especialmente em dispositivos compartilhados. Armazenamento local não equivale a proteção de dados ou autenticação.
+
+## Como executar
+
+Mantenha `index.html`, `style.css` e `app.js` na mesma pasta e abra `index.html` no navegador. No VS Code, pode-se usar o Live Server. Para avaliar persistência, repita o teste no mesmo navegador e endereço.
+
+## Validação ainda pendente
+
+Executar e registrar testes de entradas inválidas, soma diária, persistência após recarga, exclusão confirmada e cancelada, mudança de dia e falhas de armazenamento. Não há resultados desses testes apresentados nesta atualização documental.
+
+Realizar avaliação inicial com ao menos um representante externo ao desenvolvimento, apenas com dados fictícios:
+
+| Tarefa | Resultado esperado | Critério |
+| --- | --- | --- |
+| 1. Localizar Hidratação | Localizar o formulário sem instrução de navegação | Até 30 segundos, sem ajuda |
+| 2. Registrar consumo | Adicionar 200 mL fictícios e localizar o registro com data/hora automáticas | Até 60 segundos, sem ajuda ou duplicação |
+| 3. Interpretar o resultado | Adicionar 150 mL, identificar o total de 350 mL e explicar a mensagem | Até 60 segundos, sem ajuda e sem interpretar como orientação clínica |
+
+Registrar commit, dispositivo, navegador, sucesso, tempo, erros, ajuda, dificuldades de acessibilidade e satisfação de 1 a 5, sem identificar pessoalmente o participante.
+
+Aprovar a validação inicial somente se as três tarefas atenderem aos critérios, a satisfação for pelo menos 4 em cada uma e não houver bloqueio de acessibilidade. Se houver falha, corrigir e repetir as tarefas afetadas. Uma avaliação inicial não permite generalizar resultados para toda a população idosa.
 
 ## Próximas etapas
 
-1. Revisar e integrar a documentação do novo escopo.
-2. Implementar o fluxo mínimo de hidratação em PR separado, incluindo testes e evidências.
-3. Executar a validação com três tarefas e registrar os resultados antes de declarar o MVP de hidratação concluído.
+1. Revisar a regra de referência pelo peso e as diferenças em relação ao planejamento.
+2. Executar testes funcionais e de acessibilidade e registrar evidências associadas ao commit.
+3. Realizar as três tarefas com representante externo e registrar resultados.
+4. Priorizar edição/exclusão individual e consulta por dia, sem apresentá-las como já entregues.
 
-## ODS
-
-ODS 3 — Saúde e Bem-Estar.
+A aprovação da documentação não certifica validação funcional, acessibilidade ou uso clínico.
