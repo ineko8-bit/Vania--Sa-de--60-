@@ -4,7 +4,17 @@
 
 Migrar o foco do MVP Saúde 60+ de organização de medicamentos para acompanhamento do consumo de água por pessoas idosas, familiares e cuidadores, em alinhamento ao ODS 3 — Saúde e Bem-Estar.
 
-Este documento define planejamento e critérios de aceite. **O fluxo de hidratação ainda não está implementado nem validado.** A aprovação deste PR refere-se à documentação; a entrega funcional depende de outro PR e de evidências de teste.
+Este documento preserva critérios de planejamento e validação. Em 02/11/2026, a inspeção de `index.html` e `app.js` na branch `main` confirmou registro de água, total diário, persistência local, referência calculada pelo peso e limpeza dos registros de hoje. **Há implementação; a validação funcional, de acessibilidade e com usuários permanece pendente de evidências.** A aprovação deste PR refere-se à documentação.
+
+## Diferenças entre planejamento e implementação atual
+
+- Data/hora são automáticas, sem escolha manual.
+- A interface lista apenas hoje; seleção de dia, edição e exclusão individual continuam pendentes.
+- A exclusão atual remove todos os registros de hoje mediante confirmação.
+- O código calcula uma referência de peso × 30 mL/dia, ao contrário da regra originalmente planejada abaixo. Essa divergência permanece como decisão de revisão; não é apresentada como requisito atendido nem como prescrição.
+- Falhas de leitura do armazenamento retornam estado vazio sem aviso específico; o critério de mensagem acessível ainda precisa de adequação e teste.
+
+As seções de escopo e critérios abaixo representam requisitos a verificar ou completar, não um checklist já aprovado. O README atualizado distingue as funcionalidades observadas no código das pendências.
 
 ## Escopo da primeira implementação
 
@@ -26,7 +36,7 @@ Gerenciamento de medicamentos deixa de ser o objetivo da próxima versão. Conta
 5. O histórico vazio informa que ainda não há registros. A exclusão exige confirmação e mantém o registro se cancelada.
 6. Testes cobrem entradas inválidas, soma diária, edição, exclusão, recarga, mudança de dia e falha de armazenamento.
 
-## Metas, progresso e mensagens
+## Metas, progresso e mensagens — regra originalmente planejada, pendente de conciliação
 
 A primeira entrega pode funcionar apenas com total diário, sem meta. Quando houver meta, ela deverá ser informada explicitamente para a demonstração fictícia; não será calculada automaticamente pelo peso. O progresso corresponde ao total diário dividido pela meta, em porcentagem, acompanhado dos valores em mL. Totais acima da meta devem continuar visíveis sem sugerir que a pessoa beba mais.
 
@@ -54,7 +64,7 @@ Executar com ao menos um representante externo ao desenvolvimento, usando soment
 | Tarefa | Resultado esperado | Critério previamente definido |
 | --- | --- | --- |
 | 1. Localizar Hidratação | Abrir o formulário sem instrução de navegação | Concluir em até 30 segundos, sem ajuda |
-| 2. Registrar consumo fictício | Salvar 200 mL com data/hora válidas e localizar o registro | Concluir em até 60 segundos, sem ajuda ou duplicação |
+| 2. Registrar consumo fictício | Salvar 200 mL fictícios, conferir data/hora automáticas e localizar o registro | Concluir em até 60 segundos, sem ajuda ou duplicação |
 | 3. Interpretar o resultado | Após um registro adicional de 150 mL no mesmo dia, identificar 350 mL e explicar a mensagem exibida | Concluir em até 60 segundos, sem ajuda e sem interpretar a mensagem como orientação clínica |
 
 Após cada tarefa, registrar sucesso, tempo, erros, ajuda necessária, dificuldades de acessibilidade e satisfação de 1 a 5.
@@ -68,4 +78,4 @@ Regra de decisão: aprovar a validação inicial somente se as três tarefas ate
 - Capturas do fluxo e registro anonimizado das três tarefas.
 - Limitações conhecidas e identificação do commit validado.
 
-Somente após implementação, testes e validação registrados o README poderá apresentar hidratação como entregue. Até lá, manter a distinção entre protótipo anterior e funcionalidades planejadas.
+O README pode descrever a implementação observada, mas somente após testes e validação registrados poderá apresentar o MVP como validado. Manter explícitas as diferenças entre funcionalidades implementadas, requisitos pendentes e resultados efetivamente comprovados.
